@@ -55,8 +55,8 @@
   },
   "scripts": {
     "build": "concurrently \"npm run build-umd\" \"npm run build-umd-min\"",
-    "build-umd": "cat src/pipep.js | umd pipe-p -c > pipep.js",
-    "build-umd-min": "cat src/pipep.js | umd pipe-p -c | uglifyjs -c -m > pipep.min.js",
+    "build-umd": "cat src/index.js | umd pipe-p -c > pipep.js",
+    "build-umd-min": "cat src/index.js | umd pipe-p -c | uglifyjs -c -m > pipep.min.js",
     "codecov": "npm run coverage && codecov",
     "coverage": "cross-env NODE_ENV=test nyc report",
     "lint": "standard",
