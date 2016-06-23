@@ -1,0 +1,75 @@
+{
+  "name": "pipep",
+  "description": "Functional, composable, immutable and curried promise sequences that automatically handle Promise resolution.",
+  "version": "0.0.0",
+  "author": "Declan de Wet <declandewet@me.com>",
+  "ava": {
+    "verbose": true
+  },
+  "bugs": {
+    "url": "https://github.com/declandewet/pipep/issues"
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "codecov": "^1.0.1",
+    "cross-env": "^1.0.8",
+    "doctoc": "^1.2.0",
+    "nyc": "^6.6.1",
+    "uglify-js": "^2.6.4",
+    "umd": "^3.0.1"
+  },
+  "files": [
+    "pipep.js",
+    "pipep.min.js"
+  ],
+  "homepage": "https://github.com/declandewet/pipep#readme",
+  "keywords": [
+    "async",
+    "asynchronous",
+    "compose",
+    "composition",
+    "fp",
+    "functional",
+    "pipe",
+    "pipeline",
+    "programming",
+    "promise",
+    "sequence"
+  ],
+  "license": "MIT",
+  "main": "pipep.js",
+  "nyc": {
+    "cache": true,
+    "all": true,
+    "include": [
+      "src/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/declandewet/pipep.git"
+  },
+  "scripts": {
+    "build": "concurrently \"npm run build-umd\" \"npm run build-umd-min\"",
+    "build-umd": "cat src/pipep.js | umd pipe-p -c > pipep.js",
+    "build-umd-min": "cat src/pipep.js | umd pipe-p -c | uglifyjs -c -m > pipep.min.js",
+    "codecov": "npm run coverage && codecov",
+    "coverage": "cross-env NODE_ENV=test nyc report",
+    "lint": "standard",
+    "prebuild": "npm run test",
+    "prerelease": "npm run build",
+    "pretest": "npm run lint",
+    "preversion": "npm run toc && npm test",
+    "release": "npm publish",
+    "test": "cross-env NODE_ENV=test nyc ava",
+    "toc": "doctoc README.md --title '# Table of Contents'"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "verbose": true
+  }
+}
