@@ -1,7 +1,7 @@
 {
   "name": "pipep",
   "description": "Functional, composable, immutable and curried promise sequences that automatically handle Promise resolution.",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Declan de Wet <declandewet@me.com>",
   "ava": {
     "verbose": true
