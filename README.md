@@ -4,7 +4,7 @@
 
 # pipeP
 
-Functional, composable, immutable and curried promise sequences that automatically handle Promise resolution. Inspired by the function of the same name in [Ramda](http://ramdajs.com/0.21.0/docs/#pipeP).
+Functional, composable, immutable and curried promise sequences that automatically handle Promise resolution. 0.8kb Minified & GZIP'd. Inspired by the function of the same name in [Ramda](http://ramdajs.com/0.21.0/docs/#pipeP).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -35,6 +35,10 @@ Functional, composable, immutable and curried promise sequences that automatical
 ## Requirements
 
 **pipeP** has no dependencies and is exported as a UMD module, so it should be consumable anywhere. However, it does rely on access to ES2015 native `Promise` and `Object.assign`. Since these are standard, your environment needs to support them. By default, **pipeP** does not ship with any fallbacks in order to keep the code size manageable. If you're already using an ES2015 environment, you have nothing to worry about. Otherwise, see [CoreJS](https://github.com/zloirock/core-js).
+
+## Limitations
+
+**IE8**: This is really only applicable if you use the currying features. **pipeP** makes use of `Object.defineProperty` in order to make functions returned by a **pipeP** sequence report the correct arity, so that they can then be used as the first handler in a new **pipeP** sequence. There are known limitations in Internet Explorer 8 that prevent this from working correctly. A possible workaround is to not use a **pipeP** returned function as the first handler in a new **pipeP** sequence. Instead, make it unary, use it as the second handler and provide your own initial handler that translates arguments accordingly.
 
 ## Installation
 
@@ -158,8 +162,8 @@ Functions returned from **pipeP** are just functions, so they can also be used a
 const add = pipeP((a, b) => a + b)
 const square = pipeP((n) => n * n)
 const addAndSquare = pipeP(add, square)
-addAndSquare(5, 2).then(console.log.bind(console)) // logs '25'
-addAndSquare(1)(3).then(console.log.bind(console)) // logs '9'
+addAndSquare(5, 2).then(console.log.bind(console)) // logs '49'
+addAndSquare(1)(3).then(console.log.bind(console)) // logs '16'
 ```
 
 #### Handles array arguments
