@@ -6,7 +6,9 @@
 
 # build files
 pipep.js
+pipep.js.gz
 pipep.min.js
+pipep.min.js.gz
 
 ### Node ###
 # Logs
