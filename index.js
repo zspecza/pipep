@@ -21,7 +21,7 @@ var resolvePromises = curry(_resolvePromises)
  */
 module.exports = function pipeP () {
   // throw error if environment has no Promise support
-  if (!exists(Promise)) {
+  if (typeof Promise === 'undefined' || Promise === null) {
     throw new ReferenceError(s('Use a `Promise` polyfill for environments that do not support native ES2015 Promises.'))
   }
 
@@ -37,7 +37,7 @@ module.exports = function pipeP () {
   var initialHandler = remainingHandlers.shift()
 
   // throw if first handler is missing
-  if (!exists(initialHandler)) {
+  if (initialHandler == null) {
     throw new ReferenceError(s('expects at least one argument'))
   }
 
@@ -155,16 +155,7 @@ function concat (a, b) {
  * @return {Boolean}       - true if types match
  */
 function is (Ctor, val) {
-  return exists(val) && val.constructor === Ctor || val instanceof Ctor
-}
-
-/**
- * Checks if val is not null or undefined.
- * @param  {*} val - value to check
- * @return {Boolean} - true if val exists
- */
-function exists (val) {
-  return val != null
+  return typeof val !== 'undefined' && val !== null && val.constructor === Ctor || val instanceof Ctor
 }
 
 /**
