@@ -21,13 +21,13 @@ var resolvePromises = curry(_resolvePromises)
  */
 module.exports = function pipeP () {
   // throw error if environment has no Promise support
-  if (!exists(Promise)) {
-    throw new Error(s('Use a `Promise` polyfill for environments that do not support native ES2015 Promises.'))
+  if (typeof Promise === 'undefined' || Promise === null) {
+    throw new ReferenceError(s('Use a `Promise` polyfill for environments that do not support native ES2015 Promises.'))
   }
 
   // throw error if environment has no Object.assign support
   if (!is(Function, Object.assign)) {
-    throw new Error(s('Use an `Object.assign` polyfill for environments that do not support native ES2015 Object properties.'))
+    throw new ReferenceError(s('Use an `Object.assign` polyfill for environments that do not support native ES2015 Object properties.'))
   }
 
   // flatten arguments in case they contain arrays
@@ -37,13 +37,13 @@ module.exports = function pipeP () {
   var initialHandler = remainingHandlers.shift()
 
   // throw if first handler is missing
-  if (!exists(initialHandler)) {
-    throw new SyntaxError(s('expects at least one argument'))
+  if (initialHandler == null) {
+    throw new ReferenceError(s('expects at least one argument'))
   }
 
   // throw if first handler has incorrect type
   if (!is(Function, initialHandler)) {
-    throw new SyntaxError(s('first handler must be a variadic function that returns a promise or value'))
+    throw new TypeError(s('first handler must be a variadic function that returns a promise or value'))
   }
 
   // store arity of initial handler for future reference
@@ -63,7 +63,7 @@ module.exports = function pipeP () {
         // resolve individual promises before calling next handler
         ? prev.then(resolvePromises(null)).then(next)
         // if next handler is not a function, reject the promise
-        : Promise.reject(new SyntaxError(s("expected handler '%d' to have type 'function', got '%s': '%s'", i + 2, typeof next, next)))
+        : Promise.reject(new TypeError(s("expected handler '%d' to have type 'function', got '%s': '%s'", i + 2, typeof next, next)))
     }, initialComputation)
 
     // resolve individual promises in final computation
@@ -155,16 +155,7 @@ function concat (a, b) {
  * @return {Boolean}       - true if types match
  */
 function is (Ctor, val) {
-  return exists(val) && val.constructor === Ctor || val instanceof Ctor
-}
-
-/**
- * Checks if val is not null or undefined.
- * @param  {*} val - value to check
- * @return {Boolean} - true if val exists
- */
-function exists (val) {
-  return val != null
+  return typeof val !== 'undefined' && val !== null && val.constructor === Ctor || val instanceof Ctor
 }
 
 /**
