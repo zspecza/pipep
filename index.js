@@ -22,12 +22,12 @@ var resolvePromises = curry(_resolvePromises)
 module.exports = function pipeP () {
   // throw error if environment has no Promise support
   if (!exists(Promise)) {
-    throw new Error(s('Use a `Promise` polyfill for environments that do not support native ES2015 Promises.'))
+    throw new ReferenceError(s('Use a `Promise` polyfill for environments that do not support native ES2015 Promises.'))
   }
 
   // throw error if environment has no Object.assign support
   if (!is(Function, Object.assign)) {
-    throw new Error(s('Use an `Object.assign` polyfill for environments that do not support native ES2015 Object properties.'))
+    throw new ReferenceError(s('Use an `Object.assign` polyfill for environments that do not support native ES2015 Object properties.'))
   }
 
   // flatten arguments in case they contain arrays
@@ -38,12 +38,12 @@ module.exports = function pipeP () {
 
   // throw if first handler is missing
   if (!exists(initialHandler)) {
-    throw new SyntaxError(s('expects at least one argument'))
+    throw new ReferenceError(s('expects at least one argument'))
   }
 
   // throw if first handler has incorrect type
   if (!is(Function, initialHandler)) {
-    throw new SyntaxError(s('first handler must be a variadic function that returns a promise or value'))
+    throw new TypeError(s('first handler must be a variadic function that returns a promise or value'))
   }
 
   // store arity of initial handler for future reference
@@ -63,7 +63,7 @@ module.exports = function pipeP () {
         // resolve individual promises before calling next handler
         ? prev.then(resolvePromises(null)).then(next)
         // if next handler is not a function, reject the promise
-        : Promise.reject(new SyntaxError(s("expected handler '%d' to have type 'function', got '%s': '%s'", i + 2, typeof next, next)))
+        : Promise.reject(new TypeError(s("expected handler '%d' to have type 'function', got '%s': '%s'", i + 2, typeof next, next)))
     }, initialComputation)
 
     // resolve individual promises in final computation
