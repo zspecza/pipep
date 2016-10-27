@@ -57,22 +57,22 @@ var pipeP = require('pipep')
 
 ### Browser
 
-You can grab the latest release from npm CDN ([See this for instructions on how to specify a specific version](https://npmcdn.com)):
+You can grab the latest release from npm CDN ([See this for instructions on how to specify a specific version](https://unpkg.com)):
 
 ##### Development/Uncompressed
 
-[pipep.js](https://npmcdn.com/pipep)
+[pipep.js](https://unpkg.com/pipep)
 
 ```html
-<script src="//npmcdn.com/pipep"></script>
+<script src="//unpkg.com/pipep"></script>
 ```
 
 ##### Production/Minified
 
-[pipep.min.js](https://npmcdn.com/pipep/pipep.min.js)
+[pipep.min.js](https://unpkg.com/pipep/pipep.min.js)
 
 ```html
-<script src="//npmcdn.com/pipep/pipep.min.js"></script>
+<script src="//unpkg.com/pipep/pipep.min.js"></script>
 ```
 
 
